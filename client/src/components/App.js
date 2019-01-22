@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
+import CryptoCard from './CryptoCard'
 
 class App extends Component {
   state = { walletInfo: {} };
@@ -13,13 +14,25 @@ class App extends Component {
 
   render() {
     const { address, balance } = this.state.walletInfo
+    const coinData = {
+      name: 'Bitcoin',
+      symbol: 'BTC',
+      image: '/btc.png'
+    }
+
     return(
+      <div>
+        <CryptoCard
+          name={coinData.name}
+          symbol={coinData.symbol}
+          logo={coinData.image}
+          className="crypto-card"
+        />
       <div className='App'>
-        <img className='logo' src={logo}></img>
-        <br />
-        <div>
-          Welcome to the blockchain!!!
-        </div>
+      <img className='logo' src={logo}></img>
+      <br />
+
+       <h1> Welcome to the blockchain!!!</h1>
         <br />
         <div><Link to='/blocks'>Blocks</Link></div>
         <div><Link to='/conduct-transaction'>Conduct a Transaction</Link></div>
@@ -28,6 +41,7 @@ class App extends Component {
         <div className='WalletInfo'>
           <div>Address: {address}</div>
           <div>Balance: {balance}</div>
+        </div>
         </div>
       </div>
     )

@@ -21,14 +21,32 @@ const blockchain = new Blockchain();
 const transactionPool = new TransactionPool();
 const wallet = new Wallet();
 const pubsub = new PubSub({ blockchain, transactionPool, redisUrl: REDIS_URL });
-const transactionMiner = new TransactionMiner({ blockchain, transactionPool, wallet, pubsub })
-
+const transactionMiner = new TransactionMiner({ blockchain, transactionPool, wallet, pubsub });
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'client/dist')));
 
 app.get('/api/blocks', (req, res) => {
   res.json(blockchain.chain);
+});
+
+app.get('/api/blocks/length', (req, res) => {
+  res.json(blockchain.chain.length);
+});
+
+app.get('/api/blocks/:id', (req, res) => {
+  const { id } = req.params;
+  const { length } = blockchain.chain;
+
+  const blocksReversed = blockchain.chain.slice().reverse()
+
+  let strIdx = (id-1) * 5;
+  let endIdx = id * 5;
+
+  strIdx = strIdx < length ? strIdx : length;
+  endIdx = endIdx < length ? endIdx : length;
+
+  res.json(blocksReversed.slice(strIdx, endIdx))
 });
 
 app.post('/api/mine', (req, res) => {
@@ -85,6 +103,20 @@ app.get('/api/wallet-info', (req, res) => {
   });
 });
 
+app.get('/api/known-addresses', (req, res) => {
+  const addressMap = {};
+
+  for (let block of blockchain.chain) {
+    for (let transaction of block.data) {
+      const recipient = Object.keys(transaction.outputMap);
+
+      recipient.forEach(recipient => addressMap[recipient] = recipient);
+    }
+  }
+
+  res.json(Object.keys(addressMap));
+})
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client/dist/index.html'));
 });
@@ -94,7 +126,7 @@ const syncWithRootState = () => {
     if (!error && response.statusCode === 200) {
       const rootChain = JSON.parse(body);
 
-      console.log('replace chain on a sync with', rootChain);
+      //console.log('replace chain on a sync with', rootChain);
       blockchain.replaceChain(rootChain);
     }
   });
@@ -103,7 +135,7 @@ const syncWithRootState = () => {
     if(!error && response.statusCode === 200) {
       const rootTransactionPoolMap = JSON.parse(body);
 
-      console.log('replace transaction pool map on a sync with', rootTransactionPoolMap);
+      //console.log('replace transaction pool map on a sync with', rootTransactionPoolMap);
       transactionPool.setMap(rootTransactionPoolMap);
     }
   })
@@ -133,7 +165,7 @@ if(isDevelopment) {
     wallet: walletBar, recipient: wallet.publicKey, amount: 15
   });
 
-  for(let i=0; i<10; i++){
+  for(let i=0; i<20; i++){
     if(i%3 === 0) {
       walletAction();
       walletFooAction();
