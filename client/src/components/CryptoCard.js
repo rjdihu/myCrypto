@@ -37,7 +37,7 @@ class CryptoCard extends React.Component {
   priceChange(lastPrice, price) {
     const diff = lastPrice - price
     const change = diff / lastPrice
-    const percent = (change * 100)
+    const percent = -(change * 100)
     return (change === -Infinity
       ? 0
       : percent).toFixed(3)
