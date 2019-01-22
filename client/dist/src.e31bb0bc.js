@@ -29732,7 +29732,6 @@ function (_React$Component) {
     _this.state = {
       name: props.name,
       symbol: props.symbol,
-      bitcoin: props.bitcoin,
       price: null,
       lastPrice: null
     };
@@ -29779,7 +29778,6 @@ function (_React$Component) {
           name = _this$state.name,
           symbol = _this$state.symbol,
           price = _this$state.price,
-          bitcoin = _this$state.bitcoin,
           lastPrice = _this$state.lastPrice;
       var gainloss = lastPrice > price ? 'loss' : 'gain';
       return _react.default.createElement("div", {
@@ -29796,7 +29794,7 @@ function (_React$Component) {
         className: "bitcoin"
       }, _react.default.createElement("img", {
         id: "bitcoin",
-        src: bitcoin,
+        src: _bitcoin.default,
         alt: symbol
       })), _react.default.createElement("div", {
         className: "price ".concat(gainloss)
@@ -29893,20 +29891,18 @@ function (_Component) {
           balance = _this$state$walletInf.balance;
       var coinData = {
         name: 'Bitcoin',
-        symbol: 'BTC',
-        image: '/btc.png'
+        symbol: 'BTC'
       };
       return _react.default.createElement("div", null, _react.default.createElement(_CryptoCard.default, {
         name: coinData.name,
         symbol: coinData.symbol,
-        logo: coinData.image,
         className: "crypto-card"
       }), _react.default.createElement("div", {
         className: "App"
       }, _react.default.createElement("img", {
         className: "logo",
         src: _logo.default
-      }), _react.default.createElement("br", null), _react.default.createElement("h1", null, " Welcome to the blockchain!!! "), _react.default.createElement("br", null), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
+      }), _react.default.createElement("br", null), _react.default.createElement("h1", null, " Welcome to the blockchain!!!"), _react.default.createElement("br", null), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
         to: "/blocks"
       }, "Blocks")), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
         to: "/conduct-transaction"
@@ -48736,7 +48732,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57706" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49238" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

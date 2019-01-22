@@ -16,8 +16,7 @@ class App extends Component {
     const { address, balance } = this.state.walletInfo
     const coinData = {
       name: 'Bitcoin',
-      symbol: 'BTC',
-      image: '/btc.png'
+      symbol: 'BTC'
     }
 
     return(
@@ -25,7 +24,6 @@ class App extends Component {
         <CryptoCard
           name={coinData.name}
           symbol={coinData.symbol}
-          logo={coinData.image}
           className="crypto-card"
         />
       <div className='App'>

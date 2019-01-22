@@ -7,7 +7,6 @@ class CryptoCard extends React.Component {
     this.state = {
       name: props.name,
       symbol: props.symbol,
-      bitcoin: props.bitcoin,
       price: null,
       lastPrice: null,
     }
@@ -45,7 +44,7 @@ class CryptoCard extends React.Component {
   }
 
   render() {
-    const { name, symbol, price, bitcoin, lastPrice } = this.state
+    const { name, symbol, price, lastPrice } = this.state
     const gainloss = lastPrice > price
       ? 'loss'
       : 'gain'
